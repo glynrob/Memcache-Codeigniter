@@ -186,9 +186,11 @@ class CI_Cache_memcached extends CI_Driver {
 						$cache_server['hostname'], $cache_server['port'], $cache_server['weight']
 				);
 			}
-		}else {
+		} else { // used for windows version of memcached
 		  $this->_memcached = new Memcache();
-		  $this->_memcached->connect($this->_memcache_conf['default']['default_host'], $this->_memcache_conf['default']['default_port']);
+		  foreach ($this->_memcache_conf as $name => $cache_server){
+		  		$this->_memcached->connect($this->_memcache_conf[$name]['host'], $this->_memcache_conf[$name]['port'], $this->_memcache_conf[$name]['weight']);
+		  }
 		}
 	}
 
